@@ -10,8 +10,8 @@
 
 int pwm_l_pin = 5;
 int pwm_r_pin = 6;
-int reed_l_pin = 7;
-int reed_r_pin = 8;
+int reed_pin = 7;
+//int reed_r_pin = 8;
 
 // Pin 2 & 3 are the only interrupt pins on the uno 
 int push_l_pin = 2;
@@ -76,8 +76,8 @@ void right_push_isr(){
 }
 
 void setup(){
-   pinMode(reed_l_pin, INPUT_PULLUP);
-   pinMode(reed_r_pin, INPUT_PULLUP);
+   pinMode(reed_pin, INPUT_PULLUP);
+//   pinMode(reed_r_pin, INPUT_PULLUP);
 
    pinMode(push_l_pin, INPUT_PULLUP);
    pinMode(push_r_pin, INPUT_PULLUP);
@@ -89,6 +89,16 @@ void setup(){
 }
 
 void loop(){
+  
+  if(digitalRead(reed_pin) == LOW)
+  {
+    ramp_down();
+    dir = (dir==RIGHT)?LEFT:RIGHT;
+    ramp_up();
+  }
+}
+
+/*
   switch(dir){
     case LEFT:
       if(digitalRead(reed_l_pin) == LOW)
@@ -113,4 +123,4 @@ void loop(){
       analogWrite(pwm_r_pin, 0);
       break;
   }
-}
+}*/
